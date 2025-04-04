@@ -22,23 +22,18 @@ public class EmployeeManager {
         } else if (action.equals("s")) {
             System.out.println("Loading data ...");
             List<String> employees = readEmployeeList();
-            Random random = new Random();
-            int randomIndex = random.nextInt(employees.size());
-            System.out.println(employees.get(randomIndex).trim());
+            System.out.println(employees.get(new Random().nextInt(employees.size())).trim());
             System.out.println(Constants.DATA_LOADED);
 
         } else if (action.startsWith("+")) {
             System.out.println("Loading data ...");
-            String employeeName = action.substring(1).trim();
-            appendEmployee(employeeName);
+            appendEmployee(action.substring(1).trim());
             System.out.println(Constants.DATA_LOADED);
 
         } else if (action.startsWith("?")) {
             System.out.println("Loading data ...");
             String searchName = action.substring(1).trim();
-            List<String> employees = readEmployeeList();
-            boolean found = employees.stream().anyMatch(e -> e.trim().equals(searchName));
-            if (found) {
+            if (readEmployeeList().stream().anyMatch(e -> e.trim().equals(searchName))) {
                 System.out.println("Employee found!");
             }
             System.out.println(Constants.DATA_LOADED);
@@ -46,9 +41,7 @@ public class EmployeeManager {
         } else if (action.equals("c")) {
             System.out.println("Loading data ...");
             List<String> employees = readEmployeeList();
-            int wordCount = employees.size();
-            int charCount = String.join(",", employees).length();
-            System.out.println(wordCount + " word(s) found " + charCount);
+            System.out.println(employees.size() + " word(s) found " + String.join(",", employees).length());
             System.out.println(Constants.DATA_LOADED);
 
         } else if (action.startsWith("u")) {
@@ -77,17 +70,12 @@ public class EmployeeManager {
     }
 
     private static List<String> readEmployeeList() {
-        List<String> employeeList = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(Constants.EMPLOYEE_FILE)))) {
-            String line = reader.readLine();
-            if (line != null) {
-                String[] employeeArray = line.split(",");
-                employeeList = new ArrayList<>(Arrays.asList(employeeArray));
-            }
+            return new ArrayList<>(Arrays.asList(reader.readLine().split(",")));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return employeeList;
+        return new ArrayList<>();
     }
 
     private static void writeEmployeeList(List<String> employeeList) {
