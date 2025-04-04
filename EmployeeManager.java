@@ -77,6 +77,7 @@ public class EmployeeManager {
 
         } else {
             System.out.println(Constants.INVALID_ARGUMENT);
+            System.out.println("Valid arguments are: l, s, +<name>, ?<name>, c, u<name>, d<name>");
         }
     }
 
