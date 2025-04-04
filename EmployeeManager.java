@@ -33,9 +33,17 @@ public class EmployeeManager {
         } else if (action.startsWith("?")) {
             System.out.println("Loading data ...");
             String searchName = action.substring(1).trim();
-            if (readEmployeeList().stream().anyMatch(e -> e.trim().equals(searchName))) {
-                System.out.println("Employee found!");
+            List<String> employees = readEmployeeList();
+
+            boolean found = employees.stream()
+                    .anyMatch(e -> e.trim().equalsIgnoreCase(searchName));
+
+            if (found) {
+                System.out.println("✅ Employee found: " + searchName);
+            } else {
+                System.out.println("❌ Employee not found: " + searchName);
             }
+
             System.out.println(Constants.DATA_LOADED);
 
         } else if (action.equals("c")) {
