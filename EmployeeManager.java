@@ -49,7 +49,10 @@ public class EmployeeManager {
         } else if (action.equals("c")) {
             System.out.println("Loading data ...");
             List<String> employees = readEmployeeList();
-            System.out.println(employees.size() + " word(s) found " + String.join(",", employees).length());
+            int wordCount = employees.size();
+            int charCount = String.join(",", employees).length();
+
+            System.out.println(wordCount + " word(s) found, " + charCount + " characters.");
             System.out.println(Constants.DATA_LOADED);
 
         } else if (action.startsWith("u")) {
